@@ -27,7 +27,7 @@ while read -r line; do
       #extract package names from JSON output
       jsonpackages=$(tail -n+`grep -an "^\[" $jsonfile | cut -d : -f 1` $jsonfile | jq ".[].Target")
       #strip double quotes and replace newlines with \n
-      jsonpackages=$(echo "$jsonpackages" | sed 's%"%%g' | awk '{printf "%s\\n", $0}' | sed 's%\n%\\n%g')
+      jsonpackages=$(echo "$jsonpackages" | sed 's%"%%g' | awk '{printf "%s\\n", $0}')
       #echo "Got json packages list of \n$jsonpackages"
 
       data='{"fields":{"project":{ "key":"'$2'"},"summary": "Update '$line' to address high and critical vulnerabilities","description":"Please see attachment for scan report of this image. High and critical vulnerabilities were found in these packages in this image:'$jsonpackages'","issuetype": {"name":"Bug"},"labels": ["CVE"]}}'
