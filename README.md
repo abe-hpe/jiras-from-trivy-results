@@ -11,12 +11,14 @@ rpm -ivh https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0
 
 yum install -y docker jq
 
-3 - Edit the jira.json template to meet your needs (adding labels and so on)
+3 - Edit the jira json template in scan.sh to meet your needs (adding labels and so on)
 
 4 - Create a text file of images to scan, one per line - images.txt, for example
 
-5 - export JIRAUSER=<your JIRA username>
+5 - export JIRAUSER=(your JIRA username)
 
-6 - export JIRATOKEN=<your JIRA api token>
+6 - export JIRATOKEN=(your JIRA api token)
 
-5 - Execute ./scan.sh images.txt
+7 - export JIRAURL=(https://fqdn-of-your-jira-instance:port-number)
+
+8 - Execute ./scan.sh images.txt
