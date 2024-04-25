@@ -31,11 +31,7 @@ while read -r line; do
       #echo "Got json packages list of \n$jsonpackages"
 
       data='{"fields":{"project":{ "key":"'$2'"},"summary": "Update '$line' to address high and critical vulnerabilities","description":"Please see attachment for scan report of this image. High and critical vulnerabilities were found in these packages in this image:'$jsonpackages'","issuetype": {"name":"Bug"},"labels": ["CVE"]}}'
-
-      #data=$(sed "s#__REPO__#$line#" jira.json)
-      #data=$(echo $data | sed "s%__PACKAGES__%$jsonpackages%")
-      echo $data
-            JIRA=$(curl -vvv -u $JIRAUSER:$JIRATOKEN --data-binary "$data"  -H "Content-Type: application/json" https://$JIRAURL/rest/api/2/issue/ | jq -r '.key')
+      JIRA=$(curl -vvv -u $JIRAUSER:$JIRATOKEN --data-binary "$data"  -H "Content-Type: application/json" https://$JIRAURL/rest/api/2/issue/ | jq -r '.key')
       echo "Created $JIRA for $imgname"
       curl -u $JIRAUSER:$JIRATOKEN -H "X-Atlassian-Token: nocheck" -F "file=@$tablefile" https://$JIRAURL/rest/api/2/issue/$JIRA/attachments
     else
